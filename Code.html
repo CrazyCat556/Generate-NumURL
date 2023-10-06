@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Generate URL</h1>
+        <p>Enter a text to generate a URL:</p>
+        <input type="text" id="textInput" placeholder="Enter text">
+        <button onclick="generateURL()">Generate URL</button>
+        <div id="result"></div>
+        <div>&nbsp;</div>
+        <button id="copyButton" style="display:none">Copy URL</button>
+        <div>&nbsp;</div>
+        <div id="copy"></div>
+    </div>
+
+    <script>
+        function generateURL() {
+            const inputText = document.getElementById("textInput").value;
+            const formattedText = inputText.replace(/\s/g, "00").toLowerCase(); // Replace spaces with zeros and convert to lowercase
+            const imageUrl = `https://pics.dmm.co.jp/digital/video/${formattedText}/${formattedText}ps.jpg`;
+
+            //https://pics.dmm.co.jp/digital/video/midv00490/midv00490ps.jpg
+
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `Generated URL: `;
+            
+            const linkElement = document.createElement("a");
+            linkElement.href = `${imageUrl}`; // You can change this to https if needed
+            linkElement.textContent = imageUrl;
+            linkElement.target = "_blank"; // Open in a new tab
+            resultElement.appendChild(linkElement);
+
+            const copyButton = document.getElementById("copyButton");
+            const copyElement = document.getElementById("copy");
+            copyButton.style.display = "inline"; // Display the copy button
+            copyButton.onclick = function () {
+                const textArea = document.createElement("textarea");
+                textArea.value = imageUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                copyElement.textContent = `copied`;
+            }
+        }
+    </script>
+</body>
+</html>
